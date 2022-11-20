@@ -32,9 +32,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
     public void afterJob(JobExecution jobExecution) {
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("****** JOB FINISHED! Time to verify the results ******");
-//            jdbcTemplate.query("SELECT team1, team2, date FROM match",
-//                    (rs, row) -> "Team 1 " + rs.getString(1) + " Team 2 " + rs.getString(2) + " Date " + rs.getString(3))
-//                    .forEach(str -> System.out.println(str));
+
             Map<String, Team> teamData = new HashMap<>();
 
             entityManager.createQuery("select m.team1, count(*) from Match m group by m.team1", Object[].class)
@@ -61,7 +59,6 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
             teamData.values().forEach(team -> entityManager.persist(team));
             teamData.values().forEach(team -> System.out.println(team));
-
 
         }
     }

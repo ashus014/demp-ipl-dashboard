@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,6 +19,12 @@ public class Team {
     private String teamName;
     private long totalMatches;
     private long totalWins;
+
+    // Ultimately we are saying that we don't want this is the table,
+    // We are using this somewhere else.
+    // So don't bother creating column in database.
+    @Transient
+    private List<Match> matches;
 
     public Team(String teamName, long totalMatches) {
         this.teamName = teamName;
